@@ -58,7 +58,11 @@ export default function Home() {
           ) : (
             <p>You are subscribed</p>
           )}
-          <button className='bg-green-700 text-white py-3 px-5 rounded' onClick={subscribe}>SUBSCRIBE</button>
+          {subscribed ? (
+            <p className='mt-5'>Thanks for subscribing</p>
+          ) : (
+            <button className='bg-green-700 text-white py-3 px-5 rounded mt-5' onClick={subscribe}>SUBSCRIBE</button>
+          )}
         </div>
       ) : (
         <div>
