@@ -8,6 +8,7 @@ export default function Home() {
   const [user, setUser] = useState('')
   const [id, setId] = useState('')
   const [subscribed, setSubscribed] = useState(false)
+  const [loading, setLoading] = useState(true)
   const router = useRouter()
   async function subscribe() {
     const res = await fetch('/api/subscribe', {
@@ -38,6 +39,7 @@ export default function Home() {
         setId(data.user.id)
       } else { return }
       await getSubcribed()
+      setLoading(false)
     }
     async function getSubcribed() {
       let { data, error } = await supabase.from('my_users').select('subscribed').eq('id', id)
@@ -48,8 +50,13 @@ export default function Home() {
     getUser()
   }, [id])
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
-      <h1 className='text-4xl text-gray-700 font-extrabold mb-10 lg:text-6xl'>Hello {user}</h1>
+    <>
+      {
+        loading ? (
+          <p className="flex flex-col justify-center items-center h-screen text-4xl lg:text-8xl">Please be patient ...</p>
+        ) : (
+            <div className="flex flex-col justify-center items-center h-screen">
+              <h1 className='text-4xl text-gray-700 font-extrabold mb-10 lg:text-6xl'>Hello {user}</h1>
       {user ? (
         <div>
           <p>Welcome {user}</p>
@@ -75,5 +82,7 @@ export default function Home() {
       )
       }
     </div>
+        )}
+    </>
   )
 }
