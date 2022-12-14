@@ -39,7 +39,6 @@ export default function Home() {
         setId(data.user.id)
       } else { return }
       await getSubcribed()
-      setLoading(false)
     }
     async function getSubcribed() {
       let { data, error } = await supabase.from('my_users').select('subscribed').eq('id', id)
@@ -48,6 +47,7 @@ export default function Home() {
       }
     }
     getUser()
+    setLoading(false)
   }, [id])
   return (
     <>
